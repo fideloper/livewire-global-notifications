@@ -2,26 +2,14 @@
     x-data="{
         messages: [],
         remove(message) {
-            $dispatch('close-me', {msg: message})
-            setTimeout(() => {this.messages.splice(this.messages.indexOf(message), 1)}, 2600)
+            this.messages.splice(this.messages.indexOf(message), 1)
         },
     }"
     @notify.window="let message = $event.detail; messages.push(message); setTimeout(() => { remove(message) }, 2500)"
     class="z-50 fixed inset-0 flex flex-col items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:justify-start space-y-4"
 >
-    <template x-for="(message, messageIndex) in messages" :key="messageIndex" hidden x-id="['message']">
+    <template x-for="(message, messageIndex) in messages" :key="messageIndex" hidden>
         <div
-            :id="$id('message', messageIndex)"
-            x-data="{ show: false }"
-            x-init="$nextTick(() => { show = true })"
-            x-show="show"
-            @close-me.window="if ($event.detail.msg == message) {show=false}"
-            x-transition:enter="transform ease-out duration-300 transition"
-            x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
-            x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
-            x-transition:leave="transition ease-in duration-100"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
             class="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto"
         >
             <div class="rounded-lg shadow-lg overflow-hidden">
